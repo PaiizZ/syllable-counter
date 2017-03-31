@@ -16,7 +16,7 @@ public class SimpleSyllableCounter {
 				break;
 			case CONSONANT : 
 				if ( isVowelWithOutE(c)) { state = state.SINGLE_VOWEL ; syllables++; vowel = true ; }
-				else if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; syllables++; }
+				else if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; syllables++;}
 				else if(isLetter(c)) { }
 				else if(c == '-') { state = state.HYPHEN ; }
 				else state = State.NONWORD;
@@ -29,7 +29,7 @@ public class SimpleSyllableCounter {
 				break;
 			case CHARECTER_E : 
 				if ( isVowelWithOutE(c) ) { state = state.MULTIVOWEL ; }
-				else if(isLetter(c)) { state = state.CONSONANT ; }
+				else if(isLetter(c)) { state = state.CONSONANT ; vowel = true ; }
 				else if(c == '-') { state = state.HYPHEN ; }
 				else state = State.NONWORD;
 				break;
@@ -39,7 +39,8 @@ public class SimpleSyllableCounter {
 				else if(c == '-') { state = state.HYPHEN ; }
 				break;
 			case HYPHEN :
-				if ( isVowelOrY(c)) { state = state.SINGLE_VOWEL ; syllables++;  vowel = true ; }
+				if ( isVowelWithOutE(c)) { state = state.SINGLE_VOWEL ; syllables++;  vowel = true ; }
+				else if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; syllables++; }
 				else if(isLetter(c)) { state = state.CONSONANT ;  }
 				else if(c == '-') { state = State.NONWORD ; }
 				else state = State.NONWORD;

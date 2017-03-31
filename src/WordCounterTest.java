@@ -92,6 +92,7 @@ public class WordCounterTest {
 			}
 		}
 		System.out.printf("Correct: %d  Incorrect: %d\n", correct, incorrect);
+//		System.out.print(counter.countSyllables("mystery"));
 	}
 	
 	// URL of the file containing sample words.
