@@ -1,0 +1,8 @@
+# Files to ignore
+bin/
+out/
+build/
+*.class
+*.iml
+*.xml
+*.idea
