@@ -1,64 +1,72 @@
 
+ enum Enum_State {
+	START,
+	SINGLE_VOWEL,
+	CONSONANT,
+	NONWORD,
+	MULTIVOWEL,
+	HYPHEN,
+	CHARECTER_E
+}
+
 public class SimpleSyllableCounter {
+	
 	public int countSyllables( String word ){
 		int syllables = 0;
-		boolean vowel = false ;
 		char c = ' ';
-		State state = State.START;
+		Enum_State state = Enum_State.START;
 		for( int k=0 ; k < word.length() ; k++){
 			c = word.charAt(k);
 			if( c == '\'') continue;
 			switch(state) {
 			case START :
-				if(isVowelOrY(c)) { state = state.SINGLE_VOWEL ; syllables++; vowel = true ; }
+				if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ;}
+				if(isVowelOrY(c)) { state = state.SINGLE_VOWEL ; }
 				else if(isLetter(c)) { state = state.CONSONANT ; }
-				else state = State.NONWORD;
-				break;
-			case CONSONANT : 
-				if ( isVowelWithOutE(c)) { state = state.SINGLE_VOWEL ; syllables++; vowel = true ; }
-				else if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; syllables++;}
-				else if(isLetter(c)) { }
-				else if(c == '-') { state = state.HYPHEN ; }
-				else state = State.NONWORD;
+				else state = state.NONWORD;
 				break;
 			case SINGLE_VOWEL : 
 				if ( isVowel(c)) { state = state.MULTIVOWEL ; }
-				else if(isLetter(c)) { state = state.CONSONANT ; }
-				else if(c == '-') { state = state.HYPHEN ; }
-				else state = State.NONWORD;
+				else if(isLetter(c)) { state = state.CONSONANT ; syllables++; }
+				else if(c == '-') { state = state.HYPHEN ; syllables++;}
+				else state = state.NONWORD; 
 				break;
-			case CHARECTER_E : 
-				if ( isVowelWithOutE(c) ) { state = state.MULTIVOWEL ; }
-				else if(isLetter(c)) { state = state.CONSONANT ; vowel = true ; }
+			case CONSONANT : 
+				if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; }
+				else if ( isVowelOrY(c)) { state = state.SINGLE_VOWEL ; }
+				else if(isLetter(c)) { }
 				else if(c == '-') { state = state.HYPHEN ; }
-				else state = State.NONWORD;
+				else state = state.NONWORD;
+				break;
+		
+			case CHARECTER_E : 
+				if ( isVowel(c) ) { state = state.MULTIVOWEL ; }
+				else if(isLetter(c)) { state = state.CONSONANT ; syllables++; }
+				else if(c == '-') { state = state.HYPHEN ; syllables++;}
+				else state = state.NONWORD;
 				break;
 			case MULTIVOWEL : 
 				if ( isVowel(c)) {  }
-				else if(isLetter(c)) { state = state.CONSONANT ; }
-				else if(c == '-') { state = state.HYPHEN ; }
+				else if(isLetter(c)) { state = state.CONSONANT ; syllables++; }
+				else if(c == '-') { state = state.HYPHEN ; syllables++; }
+				else state = state.NONWORD; 
 				break;
 			case HYPHEN :
-				if ( isVowelWithOutE(c)) { state = state.SINGLE_VOWEL ; syllables++;  vowel = true ; }
-				else if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; syllables++; }
+				if ( "Ee".indexOf(c) >= 0) { state = state.CHARECTER_E ; }
+				else if ( isVowel(c) ) { state = state.SINGLE_VOWEL ; }
 				else if(isLetter(c)) { state = state.CONSONANT ;  }
-				else if(c == '-') { state = State.NONWORD ; }
-				else state = State.NONWORD;
+				else state = state.NONWORD;
 				break;
 			default :
 			}
 		}
-		if(state.name().equals("CHARECTER_E")) {
-				syllables--;
-				if(!vowel) syllables++;
-		};
+		if(state.name().equals("CHARECTER_E") && syllables == 0 || state.name().equals("SINGLE_VOWEL") || state.name().equals("MULTIVOWEL")){
+				syllables++;
+		}
 		return syllables;
 	}
 	public boolean isLetter (char c){
 		return Character.isLetter(c) ;
-	}
-	public boolean isVowelWithOutE (char c){
-		return "AIOUYaiouy".indexOf(c)>=0 ;
 	}
 	public boolean isVowelOrY (char c){
 		return "AEIOUYaeiouy".indexOf(c)>=0 ;
@@ -66,5 +74,6 @@ public class SimpleSyllableCounter {
 	public boolean isVowel (char c){
 		return "AEIOUaeiou".indexOf(c)>=0 ;
 	}
+	
 
 }
