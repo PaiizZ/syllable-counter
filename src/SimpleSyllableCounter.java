@@ -1,5 +1,9 @@
-
- enum Enum_State {
+/**
+ * Enum_State is a value of state
+ * @author Wanchanapon Thanwaranurak
+ * @version 31/3/2017
+ */
+enum Enum_State {
 	START,
 	SINGLE_VOWEL,
 	CONSONANT,
@@ -8,9 +12,15 @@
 	HYPHEN,
 	CHARECTER_E
 }
-
+/**
+ * SimpleSyllableCounter is find a vowel of word that you input.
+ */
 public class SimpleSyllableCounter {
-	
+	/**
+	 * Check vowel of this word
+	 * @param word that you want to check vowel
+	 * @return counter a vowel
+	 */
 	public int countSyllables( String word ){
 		int syllables = 0;
 		char c = ' ';
@@ -38,7 +48,7 @@ public class SimpleSyllableCounter {
 				else if(c == '-') { state = state.HYPHEN ; }
 				else state = state.NONWORD;
 				break;
-		
+
 			case CHARECTER_E : 
 				if ( isVowel(c) ) { state = state.MULTIVOWEL ; }
 				else if(isLetter(c)) { state = state.CONSONANT ; syllables++; }
@@ -61,19 +71,34 @@ public class SimpleSyllableCounter {
 			}
 		}
 		if(state.name().equals("CHARECTER_E") && syllables == 0 || state.name().equals("SINGLE_VOWEL") || state.name().equals("MULTIVOWEL")){
-				syllables++;
+			syllables++;
 		}
 		return syllables;
 	}
+	/**
+	 * Check the character
+	 * @param c is character of this word
+	 * @return true if c is a character
+	 */
 	public boolean isLetter (char c){
 		return Character.isLetter(c) ;
 	}
+	/**
+	 * Check a vowel and y character
+	 * @param c is character of this word
+	 * @return true if c is a vowel and y
+	 */
 	public boolean isVowelOrY (char c){
 		return "AEIOUYaeiouy".indexOf(c)>=0 ;
 	}
+	/**
+	 * Check a vowel
+	 * @param c is character of this word
+	 * @return true if c is a vowel
+	 */
 	public boolean isVowel (char c){
 		return "AEIOUaeiou".indexOf(c)>=0 ;
 	}
-	
+
 
 }

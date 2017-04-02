@@ -5,6 +5,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import stopwatch.Stopwatch;
+/**
+ * Main for run a program.
+ * Count words and syllables from URL
+ * @author Wanchanapon Thanwaranurak
+ * @version 31/3/2017
+ */
 public class Main {
 	public static void main(String[] args) {
 		final String DICT_URL = "http://se.cpe.ku.ac.th/dictionary.txt";
