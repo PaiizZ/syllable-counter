@@ -48,7 +48,6 @@ public class SimpleSyllableCounter {
 				else if(c == '-') { state = state.HYPHEN ; }
 				else state = state.NONWORD;
 				break;
-
 			case CHARECTER_E : 
 				if ( isVowel(c) ) { state = state.MULTIVOWEL ; }
 				else if(isLetter(c)) { state = state.CONSONANT ; syllables++; }
